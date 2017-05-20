@@ -1,21 +1,22 @@
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-    <button class=" navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">{{title}}</a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/vote">Vote</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" routerLink="/count-votes">Count votes</a>
-            </li>
-        </ul>
+<md-sidenav-container fullscreen>
+    <md-toolbar color="primary">
+        <button md-icon-button (click)="open = !open">
+            <md-icon>menu</md-icon>
+        </button>
+
+        <span>{{title}}</span>
+
+    </md-toolbar>
+
+    <md-sidenav [opened]="open">
+        <md-nav-list>
+            <a md-list-item routerLink="/vote">Vote</a>
+            <a md-list-item routerLink="/count-votes">Count votes</a>
+        </md-nav-list>
+    </md-sidenav>
+
+
+    <div class="container-fluid">
+        <router-outlet></router-outlet>
     </div>
-</nav>
-<div class="container-fluid">
-    <router-outlet></router-outlet>
-</div>
+</md-sidenav-container>

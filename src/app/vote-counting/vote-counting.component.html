@@ -1,32 +1,37 @@
-<section class="container-fluid">
+<section>
     <h2>Vote: {{(currentVoteIndex+1)}}</h2>
 
     <div class="row">
         <div class="col-md-6 col-lg-3" *ngFor="let group of peopleList; let groupIndex = index;">
-            <h2>{{group.groupName}}</h2>
+            <h3>{{group.groupName}}</h3>
             <div>
                 <div *ngFor="let person of group.people; let personIndex = index;" class="form-check">
-                    <label class="form-check-label" tabindex="1">
-                        <input class="form-check-input" type="checkbox" [(ngModel)]="currentVote[groupIndex][personIndex]">
-                        {{groupIndex}} {{personIndex}} {{person}}
-                    </label>
+                    <!--<label class="form-check-label" tabindex="1">-->
+                    <md-checkbox [checked]="getCheckboxState(group.id, person.id)" (change)="setCheckboxState(group.id, person.id, $event.checked)">
+                        {{group.id}} {{person.id}} {{person.name}}
+                    </md-checkbox>
+                    <!--<input class="form-check-input" type="checkbox" >-->
+
+                    <!--</label>-->
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <button class="btn btn-secondary" tabindex="2" (click)="decrementCurrentVote()">Previous Vote</button>
-        <button class="btn btn-primary" tabindex="2" (click)="incrementCurrentVote()">Next Vote</button>
+        <button md-raised-button color="primary" [routerLink]="'/count-votes/'+(currentVoteIndex+1)" (click)="incrementCurrentVote()">Next Vote</button>
+        <button md-raised-button color="secondary" [routerLink]="'/count-votes/'+(currentVoteIndex-1)" [disabled]="currentVoteIndex==0" (click)="decrementCurrentVote()">Previous Vote</button>
     </div>
 
     <div class="row">
-        <button class="btn" (click)="debugMode=!debugMode">Toogle debug</button>
+      <md-slide-toggle [checked]="debugMode" (change)="debugMode=!debugMode"></md-slide-toggle>
+      Toggle debug
     </div>
+    <!--<div class="row" *ngIf="debugMode==true">-->
+    <!--<button md-raised-button (click)="eraseVotes()">Erase votes</button>-->
+    <!--</div>-->
+
     <div class="row" *ngIf="debugMode==true">
-        <button class="btn" (click)="eraseVotes()">Erase votes</button>
-    </div>
-    <div class="row" *ngIf="debugMode==true">
-        <pre>{{votes | json}}</pre>
+      <pre>{{votes | json}}</pre>
     </div>
 </section>
